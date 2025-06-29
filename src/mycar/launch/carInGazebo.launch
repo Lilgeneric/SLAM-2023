@@ -1,0 +1,12 @@
+<launch>
+
+ 	<include file="$(find mycar)/launch/carModel.launch" />
+
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	     <arg name="world_name" value="$(find mycar)/world/RMUC_2023.world" />
+        </include>
+
+        <!-- 在 gazebo 中显示机器人模型 -->
+	<node pkg="gazebo_ros" type="spawn_model" name="model" args="-urdf -model mycar -param robot_description -x 7.5 -y 6 -z 5" />
+
+</launch>

@@ -1,0 +1,13 @@
+<robot name="my_car_camera" xmlns:xacro="http://wiki.ros.org/xacro">
+    <xacro:include filename="head.xacro" />
+    
+    <xacro:include filename="car_base.urdf.xacro" />
+    <xacro:include filename="car_camera.urdf.xacro" />
+    <xacro:include filename="car_laser.urdf.xacro" />
+    <xacro:include filename="move.urdf.xacro" />
+    <xacro:include filename="sensor_laser.urdf.xacro" />
+    <xacro:include filename="sensor_camera.urdf.xacro" />
+    <xacro:include filename="sensor_kinetic.urdf.xacro" />
+
+</robot>
+

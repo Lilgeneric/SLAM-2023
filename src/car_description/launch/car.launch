@@ -1,0 +1,7 @@
+<launch>
+    <param name="robot_description" command="$(find xacro)/xacro $(find car_description)/urdf/car.urdf.xacro" />
+    <node name="odom2basefootprint" pkg="tf2_ros" type="static_transform_publisher" args="0.08 0 0.1 0 0 0 /odom /base_footprint"/>
+    <node pkg="joint_state_publisher" name="joint_state_publisher" type="joint_state_publisher" />
+    <node pkg="robot_state_publisher" name="robot_state_publisher" type="robot_state_publisher" />
+</launch>
+

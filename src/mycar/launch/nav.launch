@@ -1,0 +1,27 @@
+<launch>
+
+    <include file="$(find car_description)/launch/car.launch" />
+    <include file="$(find wr_fslidar)/launch/fslidar_right.launch" />
+
+    <!-- 运行地图服务器，并且加载设置的地图-->
+    <include file="$(find mycar)/launch/map_server.launch" />
+
+    <!-- 启动AMCL节点 -->
+    <include file="$(find mycar)/launch/amcl.launch" />
+
+    <!-- 运行move_base节点 -->
+    <include file="$(find mycar)/launch/move_base.launch" />
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="7.6 6.0 0 1.52 0 0.0 /map /odom 100" />
+
+    <node pkg="mycar" type="arbotix" name="arbotix" />
+
+    <node pkg="mycar" type="control" name="control" />
+
+    <node pkg="mycar" type="cmd_vel_subscriber" name="cmd_vel_subscriber" />
+
+    <node pkg="mycar" type="decision" name="decision" />
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mycar)/rviz/car.rviz" />
+</launch>
+

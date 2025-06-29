@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/xin/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/xin/catkin_ws/src/FAST_LIO/include/**",
+        "/home/xin/catkin_ws/src/LIO-Livox/include/**",
+        "/home/xin/catkin_ws/src/laser_simulator/livox_laser_simulation/include/**",
+        "/home/xin/catkin_ws/src/loam_velodyne/include/**",
+        "/home/xin/catkin_ws/src/tools/waypoint_rviz_plugin/include/**",
+        "/home/xin/catkin_ws/src/wr_fslidar/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

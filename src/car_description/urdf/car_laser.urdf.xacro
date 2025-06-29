@@ -1,0 +1,157 @@
+<robot name="my_laser" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:property name="support_length" value="0.08" /> 
+    <xacro:property name="support_radius" value="0.06" /> 
+    <xacro:property name="support_x" value="0.0" /> 
+    <xacro:property name="support_y" value="0.0" /> 
+    <xacro:property name="support_z" value="${base_link_length / 2 + support_length / 2}" /> 
+
+    <xacro:property name="support_m" value="0.5" /> 
+
+    <link name="support">
+        <visual>
+            <geometry>
+                <cylinder radius="${support_radius}" length="${support_length}" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <material name="yellow">
+                <color rgba="0.5 0.3 0.0 0.5" />
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <cylinder radius="${support_radius}" length="${support_length}" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        </collision>
+
+        <xacro:cylinder_inertial_matrix m="${support_m}" r="${support_radius}" h="${support_length}" />
+
+    </link>
+
+    <joint name="support2base_link" type="fixed">
+        <parent link="base_link" />
+        <child link="support" />
+        <origin xyz="${support_x} ${support_y} ${support_z}" />
+    </joint>
+
+    <gazebo reference="support">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <xacro:property name="laser_base_length" value="0.25" /> 
+    <xacro:property name="laser_base_width" value="0.12" /> 
+    <xacro:property name="laser_base_height" value="0.06" /> 
+    <xacro:property name="laser_base_m" value="0.1" /> 
+    
+    <link name="laser_base">
+      <visual>
+        <geometry>
+          <box size="${laser_base_length} ${laser_base_width} ${laser_base_height}" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="yellow">
+          <color rgba="0.5 0.3 0.0 0.5" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${laser_base_length} ${laser_base_width} ${laser_base_height}" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </collision>
+      <xacro:Box_inertial_matrix m="${laser_base_m}" l="${laser_base_length}" w="${laser_base_width}" h="${laser_base_height}" />
+
+    </link>
+
+
+    <joint name="laser_base2support" type="fixed">
+      <parent link="support" />
+      <child link="laser_base" />
+      <origin xyz="${laser_base_length / 2 - support_radius / 2 } 0 ${support_length / 2 + laser_base_height / 2 }" />
+    </joint>
+    <gazebo reference="laser_base">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+
+    <xacro:property name="laser_base2_length" value="0.12" /> 
+    <xacro:property name="laser_base2_width" value="0.30" /> 
+    <xacro:property name="laser_base2_height" value="0.02" /> 
+    <xacro:property name="laser_base2_m" value="0.1" /> 
+    
+    <link name="laser_base2">
+      <visual>
+        <geometry>
+          <box size="${laser_base2_length} ${laser_base2_width} ${laser_base2_height}" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="yellow">
+          <color rgba="0.5 0.8 0.0 0.5" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${laser_base2_length} ${laser_base2_width} ${laser_base2_height}" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </collision>
+      <xacro:Box_inertial_matrix m="${laser_base2_m}" l="${laser_base2_length}" w="${laser_base2_width}" h="${laser_base2_height}" />
+
+    </link>
+
+
+    <joint name="laser_base2_support" type="fixed">
+      <parent link="laser_base" />
+      <child link="laser_base2" />
+      <origin xyz="${laser_base_length / 2 - laser_base2_length / 2 } 0 ${laser_base_height / 2 + laser_base2_height / 2 }" />
+    </joint>
+    <gazebo reference="laser_base2">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+
+    <xacro:property name="laser_length" value="0.0555" /> 
+    <xacro:property name="laser_radius" value="0.04" /> 
+
+    <xacro:property name="laser_offset" value="0.12" /> 
+
+    <xacro:property name="laser_x" value="0.0" /> 
+    <xacro:property name="laser_y" value="${laser_offset}" /> 
+    <xacro:property name="laser_z" value="${laser_base2_height / 2 + laser_length / 2}" /> 
+
+    <xacro:property name="laser_m" value="0.1" /> 
+
+
+    <xacro:macro name="add_laser" params="name flag" >
+    <link name="${name}_laser">
+        <visual>
+            <geometry>
+                <cylinder radius="${laser_radius}" length="${laser_length}" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <material name="black" />
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${laser_radius}" length="${laser_length}" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        </collision>
+        <xacro:cylinder_inertial_matrix m="${laser_m}" r="${laser_radius}" h="${laser_length}" />
+    </link>
+
+    <joint name="${name}_laser2laser_base" type="fixed">
+        <parent link="laser_base2" />
+        <child link="${name}_laser" />
+        <origin xyz="${laser_x} ${flag * laser_y} ${laser_z}" rpy=" 0.0 0.0 ${flag * 1.57 * 3}" />
+    </joint>
+
+    <gazebo reference="${name}_laser">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    </xacro:macro>
+
+    <xacro:add_laser name="left" flag="1" />
+    <xacro:add_laser name="right" flag="-1" />
+
+</robot>

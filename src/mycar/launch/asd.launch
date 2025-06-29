@@ -1,0 +1,8 @@
+<launch>
+  <!-- Load controller configuration -->
+  <rosparam file="$(find mycar)/config/diff_drive_controller.yaml" command="load"/>
+
+  <!-- Start diff_drive_controller -->
+  <node name="diff_drive_controller" pkg="controller_manager" type="spawner" args="diff_drive_controller" output="screen"/>
+</launch>
+
